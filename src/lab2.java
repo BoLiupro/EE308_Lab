@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +23,7 @@ public class lab2 {
         }
 		level1();
 		if(level>2) level2();
+		if(level>2) level34(level);
 	}
 
 	//check total key word
@@ -72,5 +74,32 @@ public class lab2 {
 			System.out.print(case_num.get(i)+" ");
 		}
 		System.out.println();
+	}
+
+	public static void level34(int level) {
+		int if_else_num=0,if_else_if_else_num=0;
+		Pattern p = Pattern.compile("else\s*if|else|if");
+		Matcher matcher=p.matcher(code);
+		Stack<String> s = new Stack();
+		int count=0;
+		while(matcher.find()) {
+			String temp=code.substring(matcher.start(),matcher.end());
+			s.push(temp);
+		}
+		while(!s.isEmpty()) {
+			String temp=s.pop();
+			if(temp.equals("else")) {
+				String temp2=s.pop();
+				if(temp2.equals("if")) if_else_num++;
+				else if(temp2.equals("else if")) if_else_if_else_num++;
+				else if(temp2.equals("else")) count+=2;
+			}else if(count>0) {
+				if(temp.equals("else if")) if_else_if_else_num++;
+				else if(temp.equals("if")) if_else_num++;
+				count--;
+			}
+		}
+		System.out.println("if else num is "+if_else_num);
+		if(level==4)	System.out.println("if else if else num is "+if_else_if_else_num);
 	}
 }
