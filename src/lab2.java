@@ -7,44 +7,50 @@ import java.util.regex.Pattern;
 public class lab2 {
 	public static String code="";
 	public static void main(String [] args) throws Exception {
-
 		Scanner sc=new Scanner(System.in);
 		String fileName=sc.nextLine();//ex.fileName ="/Users/liubo/Desktop/lab1_code.txt";
 		int level = sc.nextInt();
 		sc.close();
 		long start,end;
-		start = System.currentTimeMillis();
-        FileReader fileReader = new FileReader(fileName);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line=bufferedReader.readLine();
-        while(line!=null) {
-        	code+=line;
-        	line=bufferedReader.readLine();
-        }
+		start = System.currentTimeMillis();//record the time program start
+		/*
+		* read in file and code
+		*/
+		FileReader fileReader = new FileReader(fileName);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		String line=bufferedReader.readLine();
+		while(line!=null) {
+			code+=line;
+			line=bufferedReader.readLine();
+		}
+		//call different level function
 		level1();
 		if(level>2) level2();
 		if(level>2) level34(level);
-
+		
+		//record the time performance
 		end = System.currentTimeMillis();
 		System.out.println(" Run Time:" + (end - start) + "(ms)");
-
 	}
 
 	//check total key word
 	public static void level1() {
+		//all keywords
 		String keywords="abstract、assert、boolean、break、byte、case、"
 				+ "catch、char、class、continue、default、do、double、else、"
 				+ "enum、extends、final、finally、float、for、if、implements、"
 				+ "import、int、interface、instanceof、long、native、new、"
 				+ "package、private、protected、public、return、short、static、"
 				+ "strictfp、super、switch、synchronized、this、throw、throws、"
-				+ "transient、try、void、volatile、while";//all keywords
+				+ "transient、try、void、volatile、while";
+		//store keywords in an array
 		String []keyArr=keywords.split("、");
 		int total_num=0;
 		for(int i=0;i<keyArr.length;i++) {
 			Pattern p=Pattern.compile("[^a-z]"+keyArr[i]+"[^a-z]");
 			Matcher matcher=p.matcher(code);
 			while(matcher.find()) {
+				//count the total num
 				total_num++;
 			}
 		}
