@@ -1,20 +1,19 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//I made a change on GitHub here and ready to update in IDEA
 public class lab2 {
 	public static String code="";
 	public static void main(String [] args) throws Exception {
+
 		Scanner sc=new Scanner(System.in);
 		String fileName=sc.nextLine();//ex.fileName ="/Users/liubo/Desktop/lab1_code.txt";
 		int level = sc.nextInt();
 		sc.close();
+		long start,end;
+		start = System.currentTimeMillis();
         FileReader fileReader = new FileReader(fileName);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line=bufferedReader.readLine();
@@ -25,6 +24,10 @@ public class lab2 {
 		level1();
 		if(level>2) level2();
 		if(level>2) level34(level);
+
+		end = System.currentTimeMillis();
+		System.out.println(" Run Time:" + (end - start) + "(ms)");
+
 	}
 
 	//check total key word
